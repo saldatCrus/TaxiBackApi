@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace TaxiBackApi.Controllers
@@ -12,11 +13,13 @@ namespace TaxiBackApi.Controllers
     public class TakeAndSafeController : Controller
     {
         [HttpPost("talabat")]
-        public void TalabatTakeAndSafe(string Json)
+        public void TalabatTakeAndSafe(object Json)
         {
             Trace.WriteLine("Талабат на связи");
             if (Json != null) Trace.WriteLine("Json пришёл успешно");
             else Trace.WriteLine("Json не пришёл");
+
+
         }
 
         [HttpPost("zomato")]
@@ -27,7 +30,7 @@ namespace TaxiBackApi.Controllers
         }
 
         [HttpPost("uber")]
-        public void UberTakeAndSafe(string Json)
+        public void UberTakeAndSafe([FromBody]string Json)
         {
             Trace.WriteLine("Убер на связи");
             if (Json != null) Trace.WriteLine("Uber пришёл успешно");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
@@ -60,7 +61,7 @@ namespace TaxiTest
                 Root = root
             };            
 
-            string JsonOrder = JsonSerializer.Serialize<Order>(order);
+            string JsonOrder = JsonConvert.SerializeObject(order);
 
             httpClient = new HttpClient();
 
@@ -82,7 +83,9 @@ namespace TaxiTest
 
             Console.WriteLine(responseString.ToString());
 
-            Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/talabat/",new StringContent(JsonOrder));
+            string System = "Talabat";
+
+            Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/talabat/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
 
             Console.WriteLine("отправлен запрос в талабат");
 
