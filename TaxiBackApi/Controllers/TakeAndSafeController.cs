@@ -5,14 +5,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TaxiBackApi.EntitySupportClass;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace TaxiBackApi.Controllers
 {
     [ApiController]
     [Route(template: "/api/order")]
-    public class TakeAndSafeController : Controller
+    public class TakeAndSafeController : ControllerBase
     {
         
 
@@ -23,13 +22,9 @@ namespace TaxiBackApi.Controllers
             if (Json != null) Trace.WriteLine("Json пришёл успешно");
             else Trace.WriteLine("Json не пришёл");
 
-            var dataBaseControls = new DataBaseControls();
+            //DataBaseContext. = DataBaseContext;
 
-            var DataBaseContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
-
-            dataBaseControls.dBContext = DataBaseContext;
-
-            dataBaseControls.CreateOrderOnDB(Json, "Talabat");
+            //dataBaseControls.CreateOrderOnDB(Json, "Talabat");
 
 
 
@@ -42,11 +37,9 @@ namespace TaxiBackApi.Controllers
             Trace.WriteLine("Зомато на связи");
             if (Json != null) Trace.WriteLine("Zomato пришёл успешно");
 
-            var dataBaseControls = new DataBaseControls();
+            //dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
 
-            dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
-
-            dataBaseControls.CreateOrderOnDB(Json, "Zomato");
+            //dataBaseControls.CreateOrderOnDB(Json, "Zomato");
         }
 
         [HttpPost("uber")]
@@ -55,11 +48,9 @@ namespace TaxiBackApi.Controllers
             Trace.WriteLine("Убер на связи");
             if (Json != null) Trace.WriteLine("Uber пришёл успешно");
 
-            var dataBaseControls = new DataBaseControls();
+            //dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
 
-            dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
-
-            dataBaseControls.CreateOrderOnDB(Json, "Uber");
+            //dataBaseControls.CreateOrderOnDB(Json, "Uber");
         }
 
         [HttpPost("testConnection")]

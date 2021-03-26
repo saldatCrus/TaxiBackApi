@@ -16,7 +16,7 @@ namespace TaxiBackApi.Models
 
         public string JsonOrder { get; set; }
 
-        public ConvertedJsonOrder ConvertedJsonOrder { get; set;  }
+        public string ConvertedJsonOrder { get; set;  }
 
         public DateTime DateTime { get; set; }
     }
