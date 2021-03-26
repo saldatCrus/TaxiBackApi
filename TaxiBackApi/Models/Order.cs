@@ -5,11 +5,18 @@ using System.Threading.Tasks;
 
 namespace TaxiBackApi.Models
 {
-    class Order
+    public class Order
     {
-        public Product Product { get; set; }
+        public int OrderId { get; set; }
 
-        public Root Root { get; set;}
+        public string OrderType { get; set; }
+
+        public int OrderNumber { get; set; }
+
+        public string JsonOrder { get; set; }
+
+        public ConvertedJsonOrder ConvertedJsonOrder { get; set;  }
+
+        public DateTime DateTime { get; set; }
     }
 }
-

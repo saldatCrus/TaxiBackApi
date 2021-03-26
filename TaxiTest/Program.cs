@@ -18,23 +18,20 @@ namespace TaxiTest
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Нажмите кнопку для проверки");
-
-            Console.ReadKey();
 
             Product product = new Product()
             {                 
-                 id = "1",
+                 id = 1,
 
                  name = "New Prodduct", 
 
                  comment="New Comment",
 
-                 quantity="Hight",
+                 quantity= 5,
 
-                 paidPrice= "100",
+                 paidPrice= 100,
 
-                 unitPrice= "50",
+                 unitPrice= 50,
 
                  remoteCode="1234",
 
@@ -65,12 +62,29 @@ namespace TaxiTest
 
             httpClient = new HttpClient();
 
-            while (true)
-            {
-                Console.WriteLine("Ответ: " + Convert.ToString(CheckTestControlller(JsonOrder).Result));
+            int i = 0;
 
-                Thread.Sleep(5000);
+            while (true) 
+            {
+                Console.WriteLine("Ведите номер запроса [1] - Talaban; [2] - Zomato; [3] - Uber; [4] - Test");
+
+                i = Convert.ToInt32(Console.ReadLine());
+
+                switch (i)
+                {
+                    case (1): Console.WriteLine("Ответ: " + Convert.ToString(CheckTalabatControlller(JsonOrder).Result)); break;
+
+                    case (2): Console.WriteLine("Ответ: " + Convert.ToString(CheckZomatoControlller(JsonOrder).Result)); break;
+
+                    case (3): Console.WriteLine("Ответ: " + Convert.ToString(CheckUberControlller(JsonOrder).Result)); break;
+
+                    case (4): Console.WriteLine("Ответ: " + Convert.ToString(CheckTestControlller(JsonOrder).Result)); break;
+                };
+
+                Console.ReadKey();
             }
+
+
         }
 
         static async Task<bool> CheckTestControlller(string JsonOrder)
@@ -83,11 +97,35 @@ namespace TaxiTest
 
             Console.WriteLine(responseString.ToString());
 
-            string System = "Talabat";
+            return Json.IsSuccessStatusCode;
 
-            Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/talabat/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
+        }
+
+        static async Task<bool> CheckTalabatControlller(string JsonOrder)
+        {
+            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/talabat/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
 
             Console.WriteLine("отправлен запрос в талабат");
+
+            return Json.IsSuccessStatusCode;
+
+        }
+
+        static async Task<bool> CheckUberControlller(string JsonOrder)
+        {
+            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/uber/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
+
+            Console.WriteLine("отправлен запрос в Убер");
+
+            return Json.IsSuccessStatusCode;
+
+        }
+
+        static async Task<bool> CheckZomatoControlller(string JsonOrder)
+        {
+            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/zomato/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
+
+            Console.WriteLine("отправлен запрос в Зомато");
 
             return Json.IsSuccessStatusCode;
 

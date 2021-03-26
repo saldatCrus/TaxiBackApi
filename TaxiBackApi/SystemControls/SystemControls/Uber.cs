@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaxiBackApi.SystemControls.SystemStrategys;
 using TaxiBackApi.Models;
+using System.Diagnostics;
 
 namespace TaxiBackApi.SystemControls.SystemControls
 {
@@ -11,7 +12,17 @@ namespace TaxiBackApi.SystemControls.SystemControls
     {
         public ConvertedJsonOrder SystemProccesing(string Json)
         {
-            return null;
+            var DeserializatedJson = Newtonsoft.Json.JsonConvert.DeserializeObject<ConvertedJsonOrder>(Json);
+            try 
+            {
+                throw new Exception("KEKWExeptionActivated");
+            }
+            catch (Exception ERROR)
+            {
+                Trace.WriteLine($"Кто то ошибся дверью: {ERROR.Message}");
+            }
+            return DeserializatedJson;
+
         }
     }
 }

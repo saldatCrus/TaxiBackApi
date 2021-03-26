@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaxiBackApi.Servises;
+using TaxiBackApi.EntitySupportClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace TaxiBackApi
 {
@@ -25,6 +27,12 @@ namespace TaxiBackApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connection));
+
+            services.AddControllersWithViews();
+
             services.AddControllers();
 
             services.AddSingleton<BaseHandler>();

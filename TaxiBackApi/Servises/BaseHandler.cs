@@ -9,6 +9,8 @@ using TaxiBackApi.SystemControls.SystemStrategys;
 using TaxiBackApi.SystemControls.SystemControls;
 using TaxiBackApi.SystemControls.SystemContexts;
 using TaxiBackApi.Models;
+using TaxiBackApi.EntitySupportClass;
+using Microsoft.EntityFrameworkCore;
 
 namespace TaxiBackApi.Servises
 {
@@ -17,17 +19,19 @@ namespace TaxiBackApi.Servises
     {
         private BackgroundWorker _bgWorker = new BackgroundWorker();
 
-        
-
-        public void SwitchDBHandler(bool Status, int interval, string Json)
+        public void SwitchDBHandler()
         {
+            var dataBaseControls = new DataBaseControls();
 
-            string Whatsystem = "talabat";
+            dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
 
             _bgWorker.DoWork += async (s, e) =>
             {
-                while (Status == true)
+
+                while (true)
                 {
+                    var RawJsonOrder= dataBaseControls.FindRawOrder();
+
                     var Strategys =  new Dictionary<string, ISystemStrategy>
                     {
                     { "Talabat", new Talabat() },
@@ -35,8 +39,16 @@ namespace TaxiBackApi.Servises
                     { "Zomato", new Zomato() },
                     };
 
-                    var convertedJsonOrder = Strategys[Whatsystem].SystemProccesing(Json);
+                    var convertedJsonOrder = Strategys[RawJsonOrder.OrderType].SystemProccesing(RawJsonOrder.JsonOrder);
 
+                    if (convertedJsonOrder != null) 
+                    {
+                        RawJsonOrder.OrderNumber = convertedJsonOrder.root.orderNumber;
+
+                        RawJsonOrder.ConvertedJsonOrder = convertedJsonOrder;
+
+                        dataBaseControls.EditOrder(RawJsonOrder);
+                    }                    
 
                 }
             };

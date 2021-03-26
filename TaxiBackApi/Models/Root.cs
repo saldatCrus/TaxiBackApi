@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TaxiBackApi.Models
 {
-    class Root
+    public class Root
     {
-        public string orderNumber { get; set; }
+        public int orderNumber { get; set; }
 
         public List<Product> products { get; set; }
 

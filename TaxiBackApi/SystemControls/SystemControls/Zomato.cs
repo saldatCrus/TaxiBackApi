@@ -11,7 +11,14 @@ namespace TaxiBackApi.SystemControls.SystemControls
     {
         public ConvertedJsonOrder SystemProccesing(string Json)
         {
-            return null;
+            var DeserializatedJson = Newtonsoft.Json.JsonConvert.DeserializeObject<ConvertedJsonOrder>(Json);
+
+            for (int i = 0; i >= DeserializatedJson.root.products.Count; i++)
+            {
+                DeserializatedJson.root.products[i].paidPrice = DeserializatedJson.root.products[i].paidPrice/DeserializatedJson.root.products[i].quantity;
+            }
+
+            return DeserializatedJson;
         }
     }
 }

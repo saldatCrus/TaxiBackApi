@@ -6,17 +6,17 @@ namespace TaxiTest.Models
 {
     class Product
     {
-        public string id { get; set; }
+        public int id { get; set; }
 
         public string name { get; set; }
 
         public string comment { get; set; }
 
-        public string quantity { get; set; }
+        public int quantity { get; set; }
 
-        public string paidPrice { get; set; }
+        public int paidPrice { get; set; }
 
-        public string unitPrice { get; set; }
+        public int unitPrice { get; set; }
 
         public string remoteCode { get; set; }
 
