@@ -25,7 +25,9 @@ namespace TaxiBackApi.Controllers
 
             var dataBaseControls = new DataBaseControls();
 
-            dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
+            var DataBaseContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
+
+            dataBaseControls.dBContext = DataBaseContext;
 
             dataBaseControls.CreateOrderOnDB(Json, "Talabat");
 

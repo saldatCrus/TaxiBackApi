@@ -22,6 +22,8 @@ namespace TaxiBackApi.EntitySupportClass
         {
             var NewRawOrder = new Order();
 
+            NewRawOrder.OrderId = 0;
+
             NewRawOrder.OrderType = OrderType;
 
             NewRawOrder.OrderNumber = 0;
