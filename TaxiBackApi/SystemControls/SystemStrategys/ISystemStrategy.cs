@@ -8,6 +8,6 @@ namespace TaxiBackApi.SystemControls.SystemStrategys
 {
     interface ISystemStrategy
     {
-        public ConvertedJsonOrder SystemProccesing(string Json);
+        public PackagedOrder SystemProccesing(PackagedOrder InputPackagedOrder);
     }
 }

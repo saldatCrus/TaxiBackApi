@@ -14,6 +14,6 @@ namespace TaxiBackApi.Data
             
         }
 
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<PackagedOrder> PackageOrders { get; set; }
     }
 }

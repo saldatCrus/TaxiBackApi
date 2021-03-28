@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TaxiBackApi.Data;
 using Microsoft.EntityFrameworkCore;
-using TaxiBackApi.Repositoryes;
+using TaxiBackApi.Repositoryes.Orders;
 using TaxiBackApi.Models;
 
 namespace TaxiBackApi.Controllers
@@ -26,22 +26,20 @@ namespace TaxiBackApi.Controllers
         }
 
         [HttpPost("talabat")]
-        public async void TalabatTakeAndSafe(object Json)
+        public async Task TalabatTakeAndSafe(object Json)
         {
             if (Json != null) 
             {
                 Trace.WriteLine("Json пришёл успешно");
 
-                var Order = new Order()
+                await iOrdersRepository.Create(new PackagedOrder()
                 {
                     OrderNumber = 0,
-                    OrderType = "Talaban",
+                    OrderType = "Talabat",
                     JsonOrder = Convert.ToString(Json),
                     ConvertedJsonOrder = null,
                     DateTime = DateTime.Now,
-                };
-
-                await iOrdersRepository.Create(Order);
+                });
 
 
             }                
@@ -55,16 +53,14 @@ namespace TaxiBackApi.Controllers
             {
                 Trace.WriteLine("Json пришёл успешно");
 
-                //var DbControls = new DbControls(DbInitial.GetAppdbContent());
-
-                //DbControls.AddOrder(new Models.Order
-                //{
-                //    OrderNumber = 0,
-                //    OrderType = "Zomato",
-                //    JsonOrder = Convert.ToString(Json),
-                //    ConvertedJsonOrder = null,
-                //    DateTime = DateTime.Now,
-                //});
+                await iOrdersRepository.Create(new PackagedOrder()
+                {
+                    OrderNumber = 0,
+                    OrderType = "Zomato",
+                    JsonOrder = Convert.ToString(Json),
+                    ConvertedJsonOrder = null,
+                    DateTime = DateTime.Now,
+                });
             } 
             else Trace.WriteLine("Json не пришёл");
         }
@@ -76,16 +72,14 @@ namespace TaxiBackApi.Controllers
             {
                 Trace.WriteLine("Uber пришёл успешно");
 
-                //var DbControls = new DbControls(DbInitial.GetAppdbContent());
-
-                //DbControls.AddOrder(new Models.Order
-                //{
-                //    OrderNumber = 0,
-                //    OrderType = "Uber",
-                //    JsonOrder = Convert.ToString(Json),
-                //    ConvertedJsonOrder = null,
-                //    DateTime = DateTime.Now,
-                //});
+                await iOrdersRepository.Create(new PackagedOrder()
+                {
+                    OrderNumber = 0,
+                    OrderType = "Uber",
+                    JsonOrder = Convert.ToString(Json),
+                    ConvertedJsonOrder = null,
+                    DateTime = DateTime.Now,
+                });
 
             } 
             else Trace.WriteLine("Json не пришёл");

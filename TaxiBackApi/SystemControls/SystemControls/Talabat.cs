@@ -4,23 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaxiBackApi.SystemControls.SystemStrategys;
 using TaxiBackApi.Models;
+using Newtonsoft.Json;
 
 namespace TaxiBackApi.SystemControls.SystemControls
 {
     public class Talabat : ISystemStrategy
     {
-        public ConvertedJsonOrder SystemProccesing(string Json)
+        public PackagedOrder SystemProccesing(PackagedOrder InputPackagedOrder)
         {
-            var DeserializatedJson = Newtonsoft.Json.JsonConvert.DeserializeObject<ConvertedJsonOrder>(Json);
+            var DeserializatedJsonOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(InputPackagedOrder.JsonOrder);
 
-            for(int i = 0; i >= DeserializatedJson.root.products.Count; i++) 
+            foreach(Product product  in DeserializatedJsonOrder.Products) 
             {
-                DeserializatedJson.root.products[i].paidPrice = DeserializatedJson.root.products[i].paidPrice * -1;
-
-                DeserializatedJson.root.products[i].unitPrice = DeserializatedJson.root.products[i].unitPrice * -1;
+                product.paidPrice = product.paidPrice * -1;
             }
 
-            return DeserializatedJson;
+            InputPackagedOrder.OrderNumber = DeserializatedJsonOrder.OrderNumber;
+
+            InputPackagedOrder.ConvertedJsonOrder = JsonConvert.SerializeObject(DeserializatedJsonOrder);
+
+            return InputPackagedOrder;
         }
     }
 }

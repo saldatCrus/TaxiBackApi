@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using TaxiBackApi.SystemControls.SystemStrategys;
 using TaxiBackApi.Models;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace TaxiBackApi.SystemControls.SystemControls
 {
     public class Uber : ISystemStrategy
     {
-        public ConvertedJsonOrder SystemProccesing(string Json)
+        public PackagedOrder SystemProccesing(PackagedOrder InputPackagedOrder)
         {
-            var DeserializatedJson = Newtonsoft.Json.JsonConvert.DeserializeObject<ConvertedJsonOrder>(Json);
+            var DeserializatedJson = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(InputPackagedOrder.JsonOrder);
             try 
             {
                 throw new Exception("KEKWExeptionActivated");
@@ -21,7 +22,12 @@ namespace TaxiBackApi.SystemControls.SystemControls
             {
                 Trace.WriteLine($"Кто то ошибся дверью: {ERROR.Message}");
             }
-            return DeserializatedJson;
+
+            InputPackagedOrder.OrderNumber = DeserializatedJson.OrderNumber;
+
+            InputPackagedOrder.ConvertedJsonOrder = JsonConvert.SerializeObject(DeserializatedJson);
+
+            return InputPackagedOrder ;
 
         }
     }

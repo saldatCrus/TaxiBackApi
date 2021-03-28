@@ -9,11 +9,11 @@ namespace TaxiBackApi.SystemControls.SystemContexts
 {
     class SystemContext
     {
-        public ConvertedJsonOrder DoProcessing(ISystemStrategy systemStrategy, string Json) 
+        public PackagedOrder DoProcessing(ISystemStrategy systemStrategy, PackagedOrder InputPackagedOrder) 
         {
             if (systemStrategy != null)
             {
-                return systemStrategy.SystemProccesing(Json);
+                return systemStrategy.SystemProccesing(InputPackagedOrder);
             }
             else return null;
         }

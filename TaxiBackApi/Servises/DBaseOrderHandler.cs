@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.IO;
-using TaxiBackApi.Repositoryes;
+using TaxiBackApi.Repositoryes.Orders;
 
 namespace TaxiBackApi.Servises
 {
@@ -48,23 +48,16 @@ namespace TaxiBackApi.Servises
                         {
                         { "Talabat", new Talabat() },
                         { "Uber", new Uber() },
-                        { "Zomato", new Zomato() },
+                        { "Zomato", new Zomato() }
                         };
 
-                        var convertedJsonOrder = Strategys[RawOrder.OrderType].SystemProccesing(RawOrder.JsonOrder);
+                        
+                        RawOrder = Strategys[RawOrder.OrderType].SystemProccesing(RawOrder);
 
-                        if (convertedJsonOrder != null)
-                        {
-                            RawOrder.OrderNumber = convertedJsonOrder.root.orderNumber;
+                        iOrdersRepository.Update(RawOrder);
 
-                            RawOrder.ConvertedJsonOrder = convertedJsonOrder;
-
-                            await iOrdersRepository.Update(RawOrder);
-
-                        }
                     }                
 
-                    
                     Thread.Sleep(5000);
                 }
             };

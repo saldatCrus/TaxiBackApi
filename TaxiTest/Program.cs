@@ -19,43 +19,103 @@ namespace TaxiTest
         static void Main(string[] args)
         {
 
-            Product product = new Product()
+            Product product1 = new Product()
             {                 
                  id = 1,
 
-                 name = "New Prodduct", 
+                 name = "Papas House Pasta", 
 
-                 comment="New Comment",
+                 comment= "no green peppers, no pepperoni and no Turkey ham. Instead add grilled chicken",
 
-                 quantity= 5,
+                 quantity= 1,
 
-                 paidPrice= 100,
+                 paidPrice= 24,
 
-                 unitPrice= 50,
+                 unitPrice= 24,
 
-                 remoteCode="1234",
+                 remoteCode= "ProdId_33bf1315-3c0c-4df5-952b-f45a5cb1e501",
 
                  description= "New Super product, just buy this",
 
-                 vatPercentage="20",
+                 vatPercentage=":",
 
-                 discountAmount="10",
+                 discountAmount=":",
             };
 
-            Root root = new Root()
+            Product product2 = new Product()
             {
-                orderNumber = "1",
+                id = 2,
 
-                products = new List<Product>() { product, product, product },
+                name = "Cheesesticks",
 
-                createdAt = DateTime.Now
+                comment = ":",
+
+                quantity = 1,
+
+                paidPrice = 21,
+
+                unitPrice = 21,
+
+                remoteCode = "ProdId_ddb762ea-5dd4-4a40-bdda-63f699c38aa3_77aa67ad-37bc-4ee7-8d2a-4320e3c04098",
+
+                description = "New Super product, just buy this",
+
+                vatPercentage = ":",
+
+                discountAmount = ":",
             };
 
-            Order order = new Order() 
+            Product product3 = new Product()
             {
-                Product = product,
+                id = 3,
 
-                Root = root
+                name = "Tiramisu",
+
+                comment = ":",
+
+                quantity = 2,
+
+                paidPrice = 30,
+
+                unitPrice = 30,
+
+                remoteCode = "ProdId_70bbd461-bc1c-49fa-a23e-0718d8536284",
+
+                description = ":",
+
+                vatPercentage = ":",
+
+                discountAmount = ":",
+            };
+
+            Product product4 = new Product()
+            {
+                id = 4,
+
+                name = "Pepperoni Rolls",
+
+                comment = ":",
+
+                quantity = 1,
+
+                paidPrice = 23,
+
+                unitPrice = 23,
+
+                remoteCode = "ProdId_27d21751-b288-4682-b0d4-0dee7284d7ed_5eaee492-c695-4657-8ad7-d1fdf0ac0c24",
+
+                description = "New Super product, just buy this",
+
+                vatPercentage = ":",
+
+                discountAmount = ":",
+            };
+
+            Order order = new Order()
+            {
+                OrderNumber = DateTime.Now.Second,
+
+                Products = new List<Product> {product1, product2, product3, product4 }
             };            
 
             string JsonOrder = JsonConvert.SerializeObject(order);

@@ -15,7 +15,7 @@ namespace TaxiBackApi.Models
 
         public int quantity { get; set; }
 
-        public int paidPrice { get; set; }
+        public double paidPrice { get; set; }
 
         public int unitPrice { get; set; }
 

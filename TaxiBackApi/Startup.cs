@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 using TaxiBackApi.Servises;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TaxiBackApi.Data;
-using TaxiBackApi.Repositoryes;
+using TaxiBackApi.Repositoryes.Orders;
 using TaxiBackApi.Servises;
 
 namespace TaxiBackApi
@@ -60,16 +59,16 @@ namespace TaxiBackApi
 
             app.UseAuthorization();
 
-            //using (var scope = app.ApplicationServices.CreateScope())
-            //{
-            //    AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                AppDbContext dbContext = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
 
-            //    IOrdersRepository ordersRepository = new OrderRepository(dbContext);
+               IOrdersRepository ordersRepository = new OrderRepository(dbContext);
 
-            //    var InitialDbaseOrderHandler = new DBaseOrderHandler(ordersRepository);
+               var InitialDbaseOrderHandler = new DBaseOrderHandler(ordersRepository);
 
-            //    InitialDbaseOrderHandler.DBHandlerStart();
-            //};
+               InitialDbaseOrderHandler.DBHandlerStart();
+            };
 
             app.UseEndpoints(endpoints =>
             {

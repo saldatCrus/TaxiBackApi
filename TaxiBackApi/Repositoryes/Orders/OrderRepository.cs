@@ -6,7 +6,7 @@ using TaxiBackApi.Models;
 using TaxiBackApi.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace TaxiBackApi.Repositoryes
+namespace TaxiBackApi.Repositoryes.Orders
 {
     public class OrderRepository : IOrdersRepository
     {
@@ -17,9 +17,9 @@ namespace TaxiBackApi.Repositoryes
             this.Context = IncomingContext;
         }
 
-        public async Task Create(Order order)
+        public async Task Create(PackagedOrder order)
         {
-            Context.Orders.Add(order);
+            Context.PackageOrders.Add(order);
 
             await Context.SaveChangesAsync();
 
@@ -27,33 +27,34 @@ namespace TaxiBackApi.Repositoryes
 
         public async Task Delete(int id)
         {
-            var OrderToDelate = await Context.Orders.FindAsync(id);
+            var OrderToDelate = Context.PackageOrders.Find(id);
 
-            Context.Orders.Remove(OrderToDelate);
+            Context.PackageOrders.Remove(OrderToDelate);
 
             await Context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Order>> Get()
+        public async Task<IEnumerable<PackagedOrder>> Get()
         {
-            return await Context.Orders.ToListAsync();
+            return await Context.PackageOrders.ToListAsync();
         }
 
-        public async Task<Order> Get(int id)
+        public async Task<PackagedOrder> Get(int id)
         {
-            return await Context.Orders.FindAsync(id);
+            return await Context.PackageOrders.FindAsync(id);
         }
 
-        public async Task<Order> GetRawOrder() 
+        public async Task<PackagedOrder> GetRawOrder() 
         {
-            return await Context.Orders.FirstOrDefaultAsync(p => p.ConvertedJsonOrder == null);
+            return await Context.PackageOrders.FirstOrDefaultAsync(p => p.ConvertedJsonOrder == null);
         }
             
-        public async Task Update(Order order)
+        public void Update(PackagedOrder order)
         {
-            Context.Entry(order).State = EntityState.Modified;
 
-            await Context.SaveChangesAsync();
+            Context.Entry(order).State = EntityState.Modified;
+            Context.SaveChanges();
+
         }
     }
 }

@@ -7,9 +7,11 @@ namespace TaxiTest.Models
 {
     class Order
     {
-        public Product Product { get; set; }
+        public int OrderNumber { get; set; }
 
-        public Root Root { get; set;}
+        public List<Product> Products { get; set; }
+
+        public DateTime createdAt {get; set;}
     }
 }
 
