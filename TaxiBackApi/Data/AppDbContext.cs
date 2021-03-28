@@ -7,9 +7,9 @@ using TaxiBackApi.Models;
 
 namespace TaxiBackApi.Data
 {
-    public class AppDbContent : DbContext
+    public class AppDbContext : DbContext
     {
-        public AppDbContent(DbContextOptions<AppDbContent> option) : base(option) 
+        public AppDbContext(DbContextOptions<AppDbContext> option) : base(option) 
         {
             
         }

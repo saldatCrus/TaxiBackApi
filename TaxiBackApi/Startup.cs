@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TaxiBackApi.Data;
+using TaxiBackApi.Repositoryes;
+using TaxiBackApi.Servises;
 
 namespace TaxiBackApi
 {
@@ -28,11 +30,11 @@ namespace TaxiBackApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContent>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IOrdersRepository, OrderRepository>();
 
-            services.AddSingleton<BaseHandler>();
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddTransient<DbControls>();
+            services.AddScoped<DBaseOrderHandler>();
 
             services.AddControllers();
         }
@@ -57,6 +59,17 @@ namespace TaxiBackApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //using (var scope = app.ApplicationServices.CreateScope())
+            //{
+            //    AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+            //    IOrdersRepository ordersRepository = new OrderRepository(dbContext);
+
+            //    var InitialDbaseOrderHandler = new DBaseOrderHandler(ordersRepository);
+
+            //    InitialDbaseOrderHandler.DBHandlerStart();
+            //};
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-
+using TaxiBackApi.Data;
+using Microsoft.EntityFrameworkCore;
+using TaxiBackApi.Repositoryes;
+using TaxiBackApi.Models;
 
 namespace TaxiBackApi.Controllers
 {
@@ -13,44 +18,79 @@ namespace TaxiBackApi.Controllers
     [Route(template: "/api/order")]
     public class TakeAndSafeController : ControllerBase
     {
-        
+        private readonly IOrdersRepository iOrdersRepository;
+
+        public TakeAndSafeController(IOrdersRepository ordersRepository)
+        {
+            iOrdersRepository = ordersRepository;
+        }
 
         [HttpPost("talabat")]
-        public void TalabatTakeAndSafe(object Json)
+        public async void TalabatTakeAndSafe(object Json)
         {
-            Trace.WriteLine("Талабат на связи");
-            if (Json != null) Trace.WriteLine("Json пришёл успешно");
+            if (Json != null) 
+            {
+                Trace.WriteLine("Json пришёл успешно");
+
+                var Order = new Order()
+                {
+                    OrderNumber = 0,
+                    OrderType = "Talaban",
+                    JsonOrder = Convert.ToString(Json),
+                    ConvertedJsonOrder = null,
+                    DateTime = DateTime.Now,
+                };
+
+                await iOrdersRepository.Create(Order);
+
+
+            }                
             else Trace.WriteLine("Json не пришёл");
-
-            //DataBaseContext. = DataBaseContext;
-
-            //dataBaseControls.CreateOrderOnDB(Json, "Talabat");
-
-
-
-
         }
 
         [HttpPost("zomato")]
-        public void ZomatoTakeAndSafe(string Json)
+        public async void ZomatoTakeAndSafe(string Json)
         {
-            Trace.WriteLine("Зомато на связи");
-            if (Json != null) Trace.WriteLine("Zomato пришёл успешно");
+            if (Json != null) 
+            {
+                Trace.WriteLine("Json пришёл успешно");
 
-            //dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
+                //var DbControls = new DbControls(DbInitial.GetAppdbContent());
 
-            //dataBaseControls.CreateOrderOnDB(Json, "Zomato");
+                //DbControls.AddOrder(new Models.Order
+                //{
+                //    OrderNumber = 0,
+                //    OrderType = "Zomato",
+                //    JsonOrder = Convert.ToString(Json),
+                //    ConvertedJsonOrder = null,
+                //    DateTime = DateTime.Now,
+                //});
+            } 
+            else Trace.WriteLine("Json не пришёл");
         }
 
         [HttpPost("uber")]
-        public void UberTakeAndSafe([FromBody]string Json)
+        public async void UberTakeAndSafe([FromBody]string Json)
         {
-            Trace.WriteLine("Убер на связи");
-            if (Json != null) Trace.WriteLine("Uber пришёл успешно");
+            if (Json != null) 
+            {
+                Trace.WriteLine("Uber пришёл успешно");
 
-            //dataBaseControls.dBContext = new ApplicationDBContext(new DbContextOptions<ApplicationDBContext>());
+                //var DbControls = new DbControls(DbInitial.GetAppdbContent());
 
-            //dataBaseControls.CreateOrderOnDB(Json, "Uber");
+                //DbControls.AddOrder(new Models.Order
+                //{
+                //    OrderNumber = 0,
+                //    OrderType = "Uber",
+                //    JsonOrder = Convert.ToString(Json),
+                //    ConvertedJsonOrder = null,
+                //    DateTime = DateTime.Now,
+                //});
+
+            } 
+            else Trace.WriteLine("Json не пришёл");
+
+           
         }
 
         [HttpPost("testConnection")]

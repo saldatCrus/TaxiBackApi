@@ -7,6 +7,8 @@ namespace TaxiBackApi.Models
 {
     public class ConvertedJsonOrder
     {
+        public int ConvertedJsonOrderid { get; set; }
+
         public Product product { get; set; }
 
         public Root root { get; set; }

@@ -9,7 +9,7 @@ using TaxiBackApi.Data;
 
 namespace TaxiBackApi.Migrations
 {
-    [DbContext(typeof(AppDbContent))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20210326102027_Initial")]
     partial class Initial
     {
