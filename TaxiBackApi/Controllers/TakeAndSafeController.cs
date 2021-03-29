@@ -63,7 +63,7 @@ namespace TaxiBackApi.Controllers
         }
 
         [HttpPost("zomato")]
-        public async void ZomatoTakeAndSafe(object Json)
+        public async Task ZomatoTakeAndSafe(object Json)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace TaxiBackApi.Controllers
         }
 
         [HttpPost("uber")]
-        public async void UberTakeAndSafe(object Json)
+        public async Task UberTakeAndSafe(object Json)
         {
             try
             {

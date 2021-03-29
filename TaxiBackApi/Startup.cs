@@ -39,7 +39,6 @@ namespace TaxiBackApi
 
             var logger = services.BuildServiceProvider().GetService<ILogger<DBaseOrderHandler>>();
             services.AddSingleton(typeof(ILogger), logger);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,13 +64,14 @@ namespace TaxiBackApi
 
             var logger = app.ApplicationServices.CreateScope().ServiceProvider.GetService<ILogger<DBaseOrderHandler>>();                
 
+            AppDbContext dbContext = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
+
+            ILogRepository logRepository = new LogRepository(dbContext);
+
+            IOrdersRepository ordersRepository = new OrderRepository(dbContext);
+
             using (var scope = app.ApplicationServices.CreateScope())
             {
-               AppDbContext dbContext = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
-
-               IOrdersRepository ordersRepository = new OrderRepository(dbContext);
-
-               ILogRepository logRepository = new LogRepository(dbContext);
 
                var InitialDbaseOrderHandler = new DBaseOrderHandler(ordersRepository, logRepository, logger);
 
