@@ -124,6 +124,12 @@ namespace TaxiTest
 
             int i = 0;
 
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.WriteLine("Дождитесь запуска основного приложения");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
             while (true) 
             {
                 Console.WriteLine("Ведите номер запроса [1] - Talaban; [2] - Zomato; [3] - Uber; [4] - Test");
@@ -141,7 +147,6 @@ namespace TaxiTest
                     case (4): Console.WriteLine("Ответ: " + Convert.ToString(CheckTestControlller(JsonOrder).Result)); break;
                 };
 
-                Console.ReadKey();
             }
 
 
