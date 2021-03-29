@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using TaxiBackApi.Data;
-using Microsoft.EntityFrameworkCore;
 using TaxiBackApi.Repositoryes.Orders;
 using TaxiBackApi.Repositoryes.Logs;
 using TaxiBackApi.Models;

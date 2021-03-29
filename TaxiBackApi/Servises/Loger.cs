@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TaxiBackApi.Repositoryes.Logs;
 using TaxiBackApi.Models;
-using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using TaxiBackApi.Repositoryes.Orders;
 using System.IO;
 
 namespace TaxiBackApi.Servises
