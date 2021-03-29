@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace TaxiBackApi.Models
 {
+    /// <summary>
+    /// Yea yea
+    /// </summary>
     public class Product
     {
         public int id { get; set; }

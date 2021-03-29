@@ -6,7 +6,10 @@ using TaxiBackApi.Models;
 
 namespace TaxiBackApi.Repositoryes.Orders
 {
-    public  interface IOrdersRepository
+    /// <summary>
+    /// Interface for implimentation metods of order
+    /// </summary>
+    public interface IOrdersRepository
     {
         Task<IEnumerable<PackagedOrder>> Get();
 

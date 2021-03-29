@@ -1,0 +1,5 @@
+ERROR: [KEKWExeptionActivated(Test)] ON: [Void MoveNext()] AT: [29.03.2021 7:25:40]
+ERROR: [KEKWExeptionActivated(Test)] ON: [Void MoveNext()] AT: [29.03.2021 7:50:11]
+ERROR: [KEKWExeptionActivated(Test)] ON: [TaxiBackApi] AT: [29.03.2021 7:54:17]
+ERROR: [KEKWExeptionActivated(Test)] ON: [TaxiBackApi] [   at TaxiBackApi.Controllers.TakeAndSafeController.TestConnectionMetod() in D:\DevOPS\TaxiBackApi\TaxiBackApi\Controllers\TakeAndSafeController.cs:line 139] AT: [29.03.2021 7:56:15]
+ERROR: [KEKWExeptionActivated(Test)] ON: [   at TaxiBackApi.Controllers.TakeAndSafeController.TestConnectionMetod() in D:\DevOPS\TaxiBackApi\TaxiBackApi\Controllers\TakeAndSafeController.cs:line 139] AT: [29.03.2021 7:58:18]

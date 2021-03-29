@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,29 +17,51 @@ namespace TaxiBackApi.Repositoryes.Logs
             this.Context = IncomingContext;
         }
 
-        public async Task Create(Log order)
+        /// <summary>
+        /// This method Add element of Log on DataBase
+        /// </summary>
+        public async Task Create(Log InputLog)
         {
-            
+            Context.logs.Add(InputLog);
+
+            await Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This method Delete element of Log from DataBase
+        /// </summary>
         public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var OrderToDelate = Context.logs.Find(id);
+
+            Context.logs.Remove(OrderToDelate);
+
+            await Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This method show all elements of Log on DataBase
+        /// </summary>
         public async Task<IEnumerable<Log>> Get()
         {
-            throw new NotImplementedException();
+            return await Context.logs.ToListAsync();
         }
 
+        /// <summary>
+        /// This method show element of Log on DataBase by his Id 
+        /// </summary>
         public async Task<Log> Get(int id)
         {
-            throw new NotImplementedException();
+            return await Context.logs.FindAsync(id);
         }
 
-        public async void Update(Log order)
+        /// <summary>
+        /// This method change element of Log on DataBase
+        /// </summary>
+        public void Update(Log InputLog)
         {
-            throw new NotImplementedException();
+            Context.Entry(InputLog).State = EntityState.Modified;
+            Context.SaveChanges();
         }
     }
 }

@@ -6,7 +6,10 @@ using TaxiBackApi.Models;
 
 namespace TaxiBackApi.Repositoryes.Logs
 {
-    interface ILogRepository
+    /// <summary>
+    /// Interface for implimentation metods of log
+    /// </summary>
+    public interface ILogRepository
     {
         Task<IEnumerable<Log>> Get();
 

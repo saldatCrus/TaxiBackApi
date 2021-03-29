@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 using TaxiBackApi.Data;
 using Microsoft.EntityFrameworkCore;
 using TaxiBackApi.Repositoryes.Orders;
+using TaxiBackApi.Repositoryes.Logs;
 using TaxiBackApi.Models;
+using TaxiBackApi.Servises;
+using Microsoft.Extensions.Logging;
 
 namespace TaxiBackApi.Controllers
 {
@@ -20,78 +23,132 @@ namespace TaxiBackApi.Controllers
     {
         private readonly IOrdersRepository iOrdersRepository;
 
-        public TakeAndSafeController(IOrdersRepository ordersRepository)
+        private readonly ILogRepository iLogRepository;
+
+        private readonly ILogger<TakeAndSafeController> iLogger;
+
+        public TakeAndSafeController(IOrdersRepository ordersRepository, ILogRepository logRepository, ILogger<TakeAndSafeController> Inputlogger)
         {
             iOrdersRepository = ordersRepository;
+
+            iLogRepository = logRepository;
+
+            iLogger = Inputlogger;
         }
 
         [HttpPost("talabat")]
         public async Task TalabatTakeAndSafe(object Json)
         {
-            if (Json != null) 
+
+            try
             {
-                Trace.WriteLine("Json пришёл успешно");
-
-                await iOrdersRepository.Create(new PackagedOrder()
+                if (Json != null)
                 {
-                    OrderNumber = 0,
-                    OrderType = "Talabat",
-                    JsonOrder = Convert.ToString(Json),
-                    ConvertedJsonOrder = null,
-                    DateTime = DateTime.Now,
-                });
+                    Trace.WriteLine("Json пришёл успешно");
+
+                    await iOrdersRepository.Create(new PackagedOrder()
+                    {
+                        OrderNumber = 0,
+                        OrderType = "Talabat",
+                        JsonOrder = Convert.ToString(Json),
+                        ConvertedJsonOrder = null,
+                        DateTime = DateTime.Now,
+                    });
 
 
-            }                
-            else Trace.WriteLine("Json не пришёл");
+                }
+                else Trace.WriteLine("Json не пришёл");
+            }
+            catch (Exception ERROR)
+            {
+                var loger = new Loger(iLogRepository);
+
+                await loger.DbExeptionHandler(iLogger, ERROR);
+
+                await loger.FileExeptionHandler(ERROR);
+            }
         }
 
         [HttpPost("zomato")]
-        public async void ZomatoTakeAndSafe(string Json)
+        public async void ZomatoTakeAndSafe(object Json)
         {
-            if (Json != null) 
+            try
             {
-                Trace.WriteLine("Json пришёл успешно");
-
-                await iOrdersRepository.Create(new PackagedOrder()
+                if (Json != null)
                 {
-                    OrderNumber = 0,
-                    OrderType = "Zomato",
-                    JsonOrder = Convert.ToString(Json),
-                    ConvertedJsonOrder = null,
-                    DateTime = DateTime.Now,
-                });
-            } 
-            else Trace.WriteLine("Json не пришёл");
+                    Trace.WriteLine("Json пришёл успешно");
+
+                    await iOrdersRepository.Create(new PackagedOrder()
+                    {
+                        OrderNumber = 0,
+                        OrderType = "Zomato",
+                        JsonOrder = Convert.ToString(Json),
+                        ConvertedJsonOrder = null,
+                        DateTime = DateTime.Now,
+                    });
+                }
+                else Trace.WriteLine("Json не пришёл");
+            }
+            catch(Exception ERROR) 
+            {
+                var loger = new Loger(iLogRepository);
+
+                await loger.DbExeptionHandler(iLogger, ERROR);
+
+                await loger.FileExeptionHandler(ERROR);
+            }
         }
 
         [HttpPost("uber")]
-        public async void UberTakeAndSafe([FromBody]string Json)
+        public async void UberTakeAndSafe(object Json)
         {
-            if (Json != null) 
+            try
             {
-                Trace.WriteLine("Uber пришёл успешно");
-
-                await iOrdersRepository.Create(new PackagedOrder()
+                if (Json != null)
                 {
-                    OrderNumber = 0,
-                    OrderType = "Uber",
-                    JsonOrder = Convert.ToString(Json),
-                    ConvertedJsonOrder = null,
-                    DateTime = DateTime.Now,
-                });
+                    Trace.WriteLine("Uber пришёл успешно");
 
-            } 
-            else Trace.WriteLine("Json не пришёл");
+                    await iOrdersRepository.Create(new PackagedOrder()
+                    {
+                        OrderNumber = 0,
+                        OrderType = "Uber",
+                        JsonOrder = Convert.ToString(Json),
+                        ConvertedJsonOrder = null,
+                        DateTime = DateTime.Now,
+                    });
 
+                }
+                else Trace.WriteLine("Json не пришёл");
+            }
+            catch(Exception ERROR) 
+            {
+                var loger = new Loger(iLogRepository);
+
+                await loger.DbExeptionHandler(iLogger, ERROR);
+
+                await loger.FileExeptionHandler(ERROR);
+            }
            
         }
 
         [HttpPost("testConnection")]
-        public string TestConnectionMetod()
+        public async Task<string> TestConnectionMetod()
         {
+            try
+            {
+                throw new Exception("KEKWExeptionActivated(Test)");
+            }
+            catch (Exception ERROR)
+            {
+                var loger = new Loger(iLogRepository);
+
+                await loger.DbExeptionHandler(iLogger, ERROR);
+
+                await loger.FileExeptionHandler(ERROR);
+            }
             Trace.WriteLine("Тест прошёл успешно");
             return "Пепегас, полёт нормальный, слышу вас хорошо кхххх....";
+
         }
     }
 }
