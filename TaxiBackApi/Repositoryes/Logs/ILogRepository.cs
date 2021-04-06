@@ -9,7 +9,7 @@ namespace TaxiBackApi.Repositoryes.Logs
     /// </summary>
     public interface ILogRepository
     {
-        Task<IEnumerable<Log>> Get();
+        Task<IEnumerable<Log>> GetAll();
 
         Task<Log> Get(int id);
 

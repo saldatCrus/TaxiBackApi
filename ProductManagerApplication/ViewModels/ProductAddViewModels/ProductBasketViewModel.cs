@@ -67,6 +67,8 @@ namespace ProductManagerApplication.ViewModels.ProductAddViewModels
 
         }
 
+
+
         public ICommand RemoveItem => new DelegateCommand<Product>((product) =>
         {
             ProductsOnBasket.Remove(product);
@@ -91,8 +93,15 @@ namespace ProductManagerApplication.ViewModels.ProductAddViewModels
                 case ("Talabat"): await _serverСommunication.SendToTalabatController(JsonOrder); break;
                 case ("Zamato"): await _serverСommunication.SendToZomatoController(JsonOrder); break;
                 case ("Uber"): await _serverСommunication.SendToUberController(JsonOrder); break;
-            }  
+            }
+
+            ProductsOnBasket = new ObservableCollection<Product>();
+
+            await _eventBus.Publish(new CommunicationSuccess());
+
         });
+
+
 
     }     
     

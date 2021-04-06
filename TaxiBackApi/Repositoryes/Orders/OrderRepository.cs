@@ -41,7 +41,7 @@ namespace TaxiBackApi.Repositoryes.Orders
         /// <summary>
         /// This method show all elements of order L on DataBase
         /// </summary>
-        public async Task<IEnumerable<PackagedOrder>> Get()
+        public async Task<IEnumerable<PackagedOrder>> GetAll()
         {
             return await Context.PackageOrders.ToListAsync();
         }

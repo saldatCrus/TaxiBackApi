@@ -9,7 +9,7 @@ namespace TaxiBackApi.Repositoryes.Orders
     /// </summary>
     public interface IOrdersRepository
     {
-        Task<IEnumerable<PackagedOrder>> Get();
+        Task<IEnumerable<PackagedOrder>> GetAll();
 
         Task<PackagedOrder> Get(int id);
 

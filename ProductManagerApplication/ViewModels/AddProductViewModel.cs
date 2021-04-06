@@ -20,6 +20,8 @@ namespace ProductManagerApplication.ViewModels
 
         public bool AddButtomIsEnable { get; set; }
 
+        public string AddProductStatus { get; set; }
+
         public AddProductViewModel(NavigationService navigation,EventBus InputEventBus ) 
         {
             navigation.OnPageChanged += page => MemberProductTrackPage = page;
@@ -28,13 +30,19 @@ namespace ProductManagerApplication.ViewModels
             _eventBus = InputEventBus;
 
             AddButtomIsEnable = true;
-            
-        }
 
+            _eventBus.Subscribe<CommunicationSuccess>(async @event => 
+            {
+                AddProductStatus = "Заказ успешно создан и отправлен";
+            });
+
+        }
 
         public ICommand AddProductToBasket => new DelegateCommand(async() =>
         {
             await _eventBus.Publish(new AddProductOnBasket());
+
+            AddProductStatus = "Продукт добавлен в каризну";
 
             MemberProductTrackPage = new ProductChangePage();
         }); // Открытие страницы для редактирования заказа

@@ -40,7 +40,7 @@ namespace TaxiBackApi.Repositoryes.Logs
         /// <summary>
         /// This method show all elements of Log on DataBase
         /// </summary>
-        public async Task<IEnumerable<Log>> Get()
+        public async Task<IEnumerable<Log>> GetAll()
         {
             return await Context.logs.ToListAsync();
         }
