@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TaxiBackApi.Models;
@@ -31,12 +32,16 @@ namespace TaxiBackApi.Controllers
             iLogger = Inputlogger;
         }
 
-
-        [HttpPost("getallproduct")]
-        public async Task<IEnumerable<PackagedOrder>> GetAllProduct()
+        /// <summary>
+        /// Отправить все заказы которые были сделаны
+        /// </summary>
+        [HttpPost("getallorders")]
+        public async Task<IEnumerable<PackagedOrder>> GetAllOrders()
         {
             try
             {
+                Trace.WriteLine("Ордеры отправлены");
+
                 return await iOrdersRepository.GetAll();
             }
             catch (Exception ERROR)
@@ -51,13 +56,16 @@ namespace TaxiBackApi.Controllers
             return null;
         }
 
-
+        /// <summary>
+        /// Отправить логи об ошибках на приложение
+        /// </summary>
         [HttpPost("getallexeptionlog")]
-        public async Task<IEnumerable<Log>> GetAllLog()
+        public async Task<List<Log>> GetAllLog()
         {
             try
             {
-                return await iLogRepository.GetAll();
+                Trace.WriteLine("Логи отправлены");
+                return iLogRepository.GetAll().Result.ToList();
             }
             catch (Exception ERROR)
             {

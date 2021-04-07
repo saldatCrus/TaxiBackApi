@@ -67,8 +67,6 @@ namespace ProductManagerApplication.ViewModels.ProductAddViewModels
 
         }
 
-
-
         public ICommand RemoveItem => new DelegateCommand<Product>((product) =>
         {
             ProductsOnBasket.Remove(product);
@@ -77,7 +75,6 @@ namespace ProductManagerApplication.ViewModels.ProductAddViewModels
 
         public ICommand SendProductToBackApi => new DelegateCommand(async() =>
         {
-
             Order order = new Order()
             {
                 OrderNumber = DateTime.Now.Second,

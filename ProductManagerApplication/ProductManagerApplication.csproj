@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Themes\Fonts\" />
+    <Folder Include="Themes\Images\" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:ProductManagerApplication"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:ViewModelLocator x:Key="ViewModelLocator"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ViewModelLovatorDictionary.xaml"/>
+                <ResourceDictionary Source="Themes/DefaultTheme/DefaultThemeDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

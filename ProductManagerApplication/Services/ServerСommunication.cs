@@ -1,9 +1,11 @@
-﻿using System;
+﻿using ProductManagerApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ProductManagerApplication.Services
 {
@@ -11,38 +13,72 @@ namespace ProductManagerApplication.Services
     {
         private HttpClient httpClient;
 
-        public ServerСommunication() 
+        public ServerСommunication()
         {
             httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Метод для проверки связи с сервером
+        /// </summary>
         public async Task SendToTestControlller(string JsonOrder)
         {
             var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/testConnection", null);
 
-            Console.WriteLine("отправлен запрос :");
-
         }
 
+        /// <summary>
+        /// Метод для отправки заказа в систему Talabat
+        /// </summary>
         public async Task SendToTalabatController(string JsonOrder)
         {
             var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/talabat/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
 
         }
 
+        /// <summary>
+        /// Метод для отправки заказа в систему Uber
+        /// </summary>
         public async Task SendToUberController(string JsonOrder)
         {
             var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/uber/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
 
-            Console.WriteLine("отправлен запрос в Убер");
 
         }
 
+        /// <summary>
+        /// Метод для отправки заказа в систему Zomato
+        /// </summary>
         public async Task SendToZomatoController(string JsonOrder)
         {
             var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/order/zomato/", new StringContent(JsonOrder, Encoding.UTF8, "application/json"));
 
-            Console.WriteLine("отправлен запрос в Зомато");
+
+        }
+
+        /// <summary>
+        /// Метод для получения логов об ошибках на сервере
+        /// </summary>
+        public async Task<List<Log>> GetServerExeptionLogs()
+        {
+            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/communication/getallexeptionlog/", null);
+
+            var responseString = await Json.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<List<Log>>(responseString);
+
+        }
+
+        /// <summary>
+        /// Метод для получения заказов с сервера
+        /// </summary>
+        public async Task<IEnumerable<PackagedOrder>> GetServerOrders()
+        {
+            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/communication/getallorders/", null);
+
+            var responseString = await Json.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<IEnumerable<PackagedOrder>>(responseString);
 
         }
     }

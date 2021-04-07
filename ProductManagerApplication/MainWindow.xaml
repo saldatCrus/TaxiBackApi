@@ -22,7 +22,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button Content="Страница приветсвия" Grid.Row="0" Margin="0,10,0,10" Command="{Binding WellcomePageButton }"/>
+            <Button Content="Страница приветсвия" Grid.Row="0" Margin="0,10,0,10" Command="{Binding WellcomePageButton }" />
 
             <Button  Grid.Row="1" Margin="0,10,0,10" Command="{Binding AddProductPageBindingButton}">
                 <TextBlock Text="Добавить заказ продуктов" TextWrapping="Wrap" TextAlignment="Center" />
