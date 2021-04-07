@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,14 +36,14 @@ namespace TaxiBackApi.Controllers
         /// <summary>
         /// Отправить все заказы которые были сделаны
         /// </summary>
-        [HttpPost("getallorders")]
-        public async Task<IEnumerable<PackagedOrder>> GetAllOrders()
+        [HttpGet("getallorders")]
+        public async Task<string> GetAllOrders()
         {
             try
             {
                 Trace.WriteLine("Ордеры отправлены");
 
-                return await iOrdersRepository.GetAll();
+                return JsonConvert.SerializeObject(iOrdersRepository.GetAll());
             }
             catch (Exception ERROR)
             {
@@ -59,13 +60,13 @@ namespace TaxiBackApi.Controllers
         /// <summary>
         /// Отправить логи об ошибках на приложение
         /// </summary>
-        [HttpPost("getallexeptionlog")]
-        public async Task<List<Log>> GetAllLog()
+        [HttpGet("getallexeptionlog")]
+        public async Task<string> GetAllLog()
         {
             try
             {
                 Trace.WriteLine("Логи отправлены");
-                return iLogRepository.GetAll().Result.ToList();
+                return JsonConvert.SerializeObject(iLogRepository.GetAll().Result.ToList());
             }
             catch (Exception ERROR)
             {

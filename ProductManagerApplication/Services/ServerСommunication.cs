@@ -61,24 +61,24 @@ namespace ProductManagerApplication.Services
         /// </summary>
         public async Task<List<Log>> GetServerExeptionLogs()
         {
-            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/communication/getallexeptionlog/", null);
+            var Json = await httpClient.GetAsync(requestUri: $"http://localhost:5000/api/communication/getallexeptionlog/");
 
             var responseString = await Json.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<List<Log>>(responseString);
+            return JsonConvert.DeserializeObject<IEnumerable<Log>>(responseString).ToList();
 
         }
 
         /// <summary>
         /// Метод для получения заказов с сервера
         /// </summary>
-        public async Task<IEnumerable<PackagedOrder>> GetServerOrders()
+        public async Task<List<PackagedOrder>> GetServerOrders()
         {
-            var Json = await httpClient.PostAsync(requestUri: $"http://localhost:5000/api/communication/getallorders/", null);
+            var Json = await httpClient.GetAsync(requestUri: $"http://localhost:5000/api/communication/getallorders/");
 
             var responseString = await Json.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IEnumerable<PackagedOrder>>(responseString);
+            return JsonConvert.DeserializeObject<IEnumerable<PackagedOrder>>(responseString).ToList();
 
         }
     }
