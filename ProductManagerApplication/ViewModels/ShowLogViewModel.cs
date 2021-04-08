@@ -26,11 +26,12 @@ namespace ProductManagerApplication.ViewModels
         }
 
 
-        public ICommand GetAllLog => new DelegateCommand(() =>
+        public ICommand GetAllLog => new DelegateCommand(async() =>
         {
             try 
             {
-                Logs = new ObservableCollection<Log>(_serverСommunication.GetServerExeptionLogs().Result);
+                var InputLogList = await _serverСommunication.GetServerExeptionLogs();
+                Logs = new ObservableCollection<Log>(InputLogList);
             }
             catch(Exception ERROR)
             {

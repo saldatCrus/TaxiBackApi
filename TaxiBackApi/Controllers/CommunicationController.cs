@@ -61,12 +61,20 @@ namespace TaxiBackApi.Controllers
         /// Отправить логи об ошибках на приложение
         /// </summary>
         [HttpGet("getallexeptionlog")]
-        public async Task<string> GetAllLog()
+        public async Task<List<Log>> GetAllLog() //
         {
             try
             {
                 Trace.WriteLine("Логи отправлены");
-                return JsonConvert.SerializeObject(iLogRepository.GetAll().Result.ToList());
+
+                var InputLogs = await iLogRepository.GetAll();
+
+                foreach(var log in InputLogs) 
+                {
+                    Trace.WriteLine(log.EventDataTime, log.EventName);
+                }
+
+                return  InputLogs.ToList();
             }
             catch (Exception ERROR)
             {
