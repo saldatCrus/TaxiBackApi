@@ -36,14 +36,31 @@ namespace TaxiBackApi.Controllers
         /// <summary>
         /// Отправить все заказы которые были сделаны
         /// </summary>
-        [HttpGet("getallorders")]
-        public async Task<string> GetAllOrders()
+        [HttpGet("getallproduct")]
+        public async Task<List<Product>> GetAllOrders()
         {
             try
             {
                 Trace.WriteLine("Ордеры отправлены");
 
-                return JsonConvert.SerializeObject(iOrdersRepository.GetAll());
+                var InputOrders = await iOrdersRepository.GetAll();
+
+                var ProductToSend = new List<Product>();
+
+                foreach (var Order in InputOrders) 
+                {
+                  var order = JsonConvert.DeserializeObject<Order>(Order.ConvertedJsonOrder);
+
+                    foreach (var Product in order.Products)
+                    {
+                        ProductToSend.Add(Product);
+
+                        Trace.WriteLine(Product.name);
+                    }
+
+                }
+
+                return ProductToSend;
             }
             catch (Exception ERROR)
             {

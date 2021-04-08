@@ -26,7 +26,7 @@ namespace ProductManagerApplication.ViewModels
         }
 
 
-        public ICommand GetAllLog => new DelegateCommand(async() =>
+        public ICommand GetAllOrders => new DelegateCommand(async() =>
         {
             try 
             {

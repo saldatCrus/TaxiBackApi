@@ -72,13 +72,13 @@ namespace ProductManagerApplication.Services
         /// <summary>
         /// Метод для получения заказов с сервера
         /// </summary>
-        public async Task<List<PackagedOrder>> GetServerOrders()
+        public async Task<List<Product>> GetServerProducts()
         {
-            var Json = await httpClient.GetAsync(requestUri: $"http://localhost:5000/api/communication/getallorders/");
+            var Json = await httpClient.GetAsync(requestUri: $"http://localhost:5000/api/communication/getallproduct/");
 
             var responseString = await Json.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IEnumerable<PackagedOrder>>(responseString).ToList();
+            return JsonConvert.DeserializeObject<List<Product>>(responseString);
 
         }
     }
